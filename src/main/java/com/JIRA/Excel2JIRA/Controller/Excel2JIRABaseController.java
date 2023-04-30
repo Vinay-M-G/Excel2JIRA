@@ -20,7 +20,6 @@ public class Excel2JIRABaseController {
     public ResponseEntity<?> acceptAndStartUploadProcess(
             @RequestBody final RequestModel requestModel
             ){
-        System.out.println(requestModel.getAbsolutePath());
         testCaseProcessor.startProcess(requestModel);
         return ResponseEntity.accepted().body(requestModel);
     }
