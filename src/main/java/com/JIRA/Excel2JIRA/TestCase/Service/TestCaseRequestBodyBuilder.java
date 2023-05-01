@@ -2,16 +2,13 @@ package com.JIRA.Excel2JIRA.TestCase.Service;
 
 import com.JIRA.Excel2JIRA.Constants.JIRARequestBodyKeys;
 import com.JIRA.Excel2JIRA.CoreModel.RequestModel;
+import com.JIRA.Excel2JIRA.CoreUtilities.JIRAClient;
 import com.JIRA.Excel2JIRA.TestCase.Model.TestCaseCoreModel;
 import com.JIRA.Excel2JIRA.TestCase.Model.TestCaseStepsModel;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 public class TestCaseRequestBodyBuilder {
-
 
     public void postTestCaseToJIRA(RequestModel requestModel, TestCaseCoreModel testCase){
 
@@ -48,6 +45,10 @@ public class TestCaseRequestBodyBuilder {
         requestBody.put(JIRARequestBodyKeys.FIELDS, requestBodyContent);
 
         System.out.println(requestBody);
+
+        JIRAClient jiraClient = new JIRAClient();
+        jiraClient.postTestCaseData(requestModel , requestBody);
+
     }
 
     private Map<String, String> getProjectKeyMap(){

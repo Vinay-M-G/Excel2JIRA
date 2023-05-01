@@ -19,6 +19,7 @@ public class Excel2JIRABaseController {
             @RequestBody final RequestModel requestModel
             ){
         Thread testCaseThread = new Thread(new TestCaseProcessExecutor(requestModel));
+        System.out.println(requestModel.getJIRAUrl());
         testCaseThread.start();
         return ResponseEntity.accepted().body(requestModel);
     }
