@@ -7,8 +7,6 @@ import com.JIRA.Excel2JIRA.TestCase.Model.TestCaseCoreModel;
 import com.JIRA.Excel2JIRA.TestCase.Model.TestCaseFieldModel;
 import com.JIRA.Excel2JIRA.TestCase.Model.TestCaseStepsModel;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,13 +14,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
-@Service
 public class TestCaseProcessor {
 
-    @Autowired
-    private TestCaseRequestBodyBuilder testCaseRequestBodyBuilder;
-
     private static final Logger LOGGER = Logger.getLogger("TestCaseProcessor");
+
     public void startProcess(RequestModel requestModel){
 
         try{
@@ -65,6 +60,7 @@ public class TestCaseProcessor {
                     testCase.setTestSetKey(Collections.singletonList(requestModel.getTestSetKey()));
                     testCase.setTestCaseStepsModelList(getTestSteps(excelParser, startPoint, endPoint));
 
+                    TestCaseRequestBodyBuilder testCaseRequestBodyBuilder = new TestCaseRequestBodyBuilder();
                     testCaseRequestBodyBuilder.postTestCaseToJIRA(requestModel, testCase);
 
                 }

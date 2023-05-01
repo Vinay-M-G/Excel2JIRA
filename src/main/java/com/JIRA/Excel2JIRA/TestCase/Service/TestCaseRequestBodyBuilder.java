@@ -5,20 +5,13 @@ import com.JIRA.Excel2JIRA.CoreModel.RequestModel;
 import com.JIRA.Excel2JIRA.TestCase.Model.TestCaseCoreModel;
 import com.JIRA.Excel2JIRA.TestCase.Model.TestCaseStepsModel;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
 public class TestCaseRequestBodyBuilder {
-    @Value("${JIRA.CustomFields.TestCaseSteps}")
-    private String TEST_CASE_STEPS_CUSTOM_KEY;
 
-    @Value("${JIRA.CustomFields.TestSet}")
-    private String TEST_SET_CUSTOM_KEY;
-
-    @Value("${JIRA.Project.Key}")
-    private String projectKey;
 
     public void postTestCaseToJIRA(RequestModel requestModel, TestCaseCoreModel testCase){
 
@@ -31,7 +24,7 @@ public class TestCaseRequestBodyBuilder {
         requestBodyContent.put(JIRARequestBodyKeys.ISSUE_TYPE, TestCaseCoreModel.ISSUE_TYPE);
         requestBodyContent.put(JIRARequestBodyKeys.SUMMARY, testCase.getSummary());
         requestBodyContent.put(JIRARequestBodyKeys.DESCRIPTION, testCase.getDescription());
-        requestBodyContent.put(TEST_SET_CUSTOM_KEY , testCase.getTestSetKey());
+        requestBodyContent.put(JIRARequestBodyKeys.TEST_SET_CUSTOM_KEY , testCase.getTestSetKey());
 
         List<TestCaseStepsModel> fields = testCase.getTestCaseStepsModelList();
 
@@ -50,16 +43,16 @@ public class TestCaseRequestBodyBuilder {
 
         Map<String, Object> stepToCustomField = new HashMap<>();
         stepToCustomField.put(JIRARequestBodyKeys.STEPS, steps);
-        requestBodyContent.put(TEST_CASE_STEPS_CUSTOM_KEY, stepToCustomField);
+        requestBodyContent.put(JIRARequestBodyKeys.TEST_CASE_STEPS_CUSTOM_KEY, stepToCustomField);
 
         requestBody.put(JIRARequestBodyKeys.FIELDS, requestBodyContent);
 
-        //System.out.println(requestBody);
+        System.out.println(requestBody);
     }
 
     private Map<String, String> getProjectKeyMap(){
         Map<String, String> keyMap = new HashMap<>();
-        keyMap.put("key", this.projectKey);
+        keyMap.put("key", JIRARequestBodyKeys.PROJECT_KEY);
         return keyMap;
     }
 }
