@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,7 +20,8 @@ import java.util.logging.Logger;
 public class TestCaseProcessor {
 
     @Autowired
-    private TestCaseResponseBodyBuilder testCaseResponseBodyBuilder;
+    private TestCaseRequestBodyBuilder testCaseRequestBodyBuilder;
+
     private static final Logger LOGGER = Logger.getLogger("TestCaseProcessor");
     public void startProcess(RequestModel requestModel){
 
@@ -65,7 +65,7 @@ public class TestCaseProcessor {
                     testCase.setTestSetKey(Collections.singletonList(requestModel.getTestSetKey()));
                     testCase.setTestCaseStepsModelList(getTestSteps(excelParser, startPoint, endPoint));
 
-                    //testCaseResponseBodyBuilder.postTestCaseToJIRA(requestModel, testCase);
+                    testCaseRequestBodyBuilder.postTestCaseToJIRA(requestModel, testCase);
 
                 }
 
@@ -95,8 +95,9 @@ public class TestCaseProcessor {
 
         builder.append(excelParser.getCellValueInString(ExcelColumnConstants.EPIC_NO, rowId)).append("_");
         builder.append(excelParser.getCellValueInString(ExcelColumnConstants.STORY_NUMBER, rowId)).append("_");
-        builder.append(excelParser.getCellValueInString(ExcelColumnConstants.HEADING_DESCRIPTION, rowId)).append("_");
-        builder.append(excelParser.getCellValueInString(ExcelColumnConstants.TEST_CASE_ID_COLUMN, rowId));
+        builder.append(excelParser.getCellValueInString(ExcelColumnConstants.TEST_CASE_ID_COLUMN, rowId)).append("_");
+        builder.append(excelParser.getCellValueInString(ExcelColumnConstants.HEADING_DESCRIPTION, rowId));
+
 
         return builder.toString();
 
