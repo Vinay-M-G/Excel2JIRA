@@ -5,6 +5,17 @@ public class RequestModel {
     private String accessToken;
     private String absolutePath;
     private String testSetKey;
+    private String jiraUrl;
+
+    public String getJIRAUrl()
+    {
+        return jiraUrl;
+    }
+
+    public void setJIRAUrl(String jiraUrl)
+    {
+        this.jiraUrl = jiraUrl;
+    }
 
     public String getAccessToken()
     {
